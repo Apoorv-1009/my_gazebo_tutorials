@@ -15,8 +15,8 @@
 #include <iostream>
 
 /**
-    * @brief Abstract base class for robot states
-    */
+* @brief Abstract base class for robot states
+*/
 class State {
     public:
         virtual ~State() = default;
@@ -35,12 +35,28 @@ class State {
 };
 
 /**
-    * @brief Class representing the "Moving Forward" state of the robot
-    */
+* @brief Class representing the "Moving Forward" state of the robot
+*/
 class MovingForwardState : public State {
     public:
+        /**
+         * @brief Construct a new Moving Forward State object
+         * 
+         */
         MovingForwardState();
+
+        /**
+         * @brief Function to handle the action for the current state
+         * 
+         * @return geometry_msgs::msg::Twist 
+         */
         geometry_msgs::msg::Twist handle() override;
+
+        /**
+         * @brief Function to update the state based on sensor input
+         * 
+         * @param close_to_obstacle 
+         */
         void update_state(bool close_to_obstacle) override;
 };
 
@@ -49,8 +65,25 @@ class MovingForwardState : public State {
 */
 class RotatingState : public State {
     public:
+        /**
+         * @brief Construct a new Rotating State object
+         * 
+         * @param clockwise 
+         */
         explicit RotatingState(bool clockwise);
+
+        /**
+         * @brief Function to handle the action for the current state
+         * 
+         * @return geometry_msgs::msg::Twist 
+         */
         geometry_msgs::msg::Twist handle() override;
+
+        /**
+         * @brief Function to update the state based on sensor input
+         * 
+         * @param close_to_obstacle 
+         */
         void update_state(bool close_to_obstacle) override;
 
     private:
@@ -58,18 +91,60 @@ class RotatingState : public State {
 };
 
 /**
-    * @brief Context class for the robot that manages state transitions
-    */
+* @brief Context class for the robot that manages state transitions
+*/
 class WalkerController {
     public:
+        /**
+         * @brief Construct a new Walker Controller object
+         * 
+         */
         WalkerController();
+
+        /**
+         * @brief Destroy the Walker Controller object
+         * 
+         */
         ~WalkerController();
+
+        /**
+         * @brief Function to update the state based on sensor input
+         * 
+         * @param distance_to_obstacle 
+         * @return geometry_msgs::msg::Twist 
+         */
         geometry_msgs::msg::Twist update(double distance_to_obstacle);
 
     private:
+
+        /**
+         * @brief State pointer to the current state of the robot
+         * 
+         */
         State* current_state;
+
+        /**
+         * @brief Boolean indicating if the robot is close to an obstacle
+         * 
+         */
         bool close_to_obstacle;
+
+        /**
+         * @brief Boolean indicating if the robot should rotate clockwise
+         * 
+         */
         bool rotate_clockwise;
+
+        /**
+         * @brief Set the state object
+         * 
+         * @param state 
+         */
         void set_state(State* state);
+
+        /**
+         * @brief Boolean indicating if the robot is currently turning
+         * 
+         */
         bool turning;
 };

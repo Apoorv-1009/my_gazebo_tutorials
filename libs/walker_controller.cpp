@@ -12,16 +12,16 @@
 #include "walker_controller.hpp"
 
 /**
-    * @brief Construct a new Moving Forward State:: Moving Forward State object
-    * 
-    */
+* @brief Construct a new Moving Forward State:: Moving Forward State object
+* 
+*/
 MovingForwardState::MovingForwardState() {}
 
 /**
-    * @brief Function to handle the action for the current state
-    * 
-    * @return geometry_msgs::msg::Twist 
-    */
+* @brief Function to handle the action for the current state
+* 
+* @return geometry_msgs::msg::Twist 
+*/
 geometry_msgs::msg::Twist MovingForwardState::handle() {
     geometry_msgs::msg::Twist action;
     // Move forward
@@ -32,20 +32,20 @@ geometry_msgs::msg::Twist MovingForwardState::handle() {
 }
 
 /**
-    * @brief Function to update the state based on sensor input
-    * 
-    * @param close_to_obstacle 
-    */
+* @brief Function to update the state based on sensor input
+* 
+* @param close_to_obstacle 
+*/
 void MovingForwardState::update_state(bool close_to_obstacle) {
     // No internal state change; transitions are handled in the context class
-    std::cout << "Moving Forward \n";
+    // std::cout << "Moving Forward \n";
 }
 
 /**
-    * @brief Construct a new Rotating State:: Rotating State object
-    * 
-    * @param clockwise Boolean indicating the direction of rotation
-    */
+* @brief Construct a new Rotating State:: Rotating State object
+* 
+* @param clockwise Boolean indicating the direction of rotation
+*/
 RotatingState::RotatingState(bool clockwise) : clockwise_(clockwise) {}
 
 geometry_msgs::msg::Twist RotatingState::handle() {
@@ -73,18 +73,18 @@ WalkerController::WalkerController()
     : current_state(new MovingForwardState()), close_to_obstacle(false), rotate_clockwise(true), turning(false) {}
 
 /**
-    * @brief Destroy the Walker Controller:: Walker Controller object
-    * 
-    */
+* @brief Destroy the Walker Controller:: Walker Controller object
+* 
+*/
 WalkerController::~WalkerController() {
     delete current_state;
 }
 
 /**
-    * @brief Function to set the current state of the robot
-    * 
-    * @param state 
-    */
+* @brief Function to set the current state of the robot
+* 
+* @param state 
+*/
 void WalkerController::set_state(State* state) {
     delete current_state;
     current_state = state;
