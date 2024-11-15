@@ -12,6 +12,8 @@
 #include "rclcpp/rclcpp.hpp"
 #include "sensor_msgs/msg/laser_scan.hpp"
 #include "geometry_msgs/msg/twist.hpp"
+#include "walker_controller.hpp"
+#include <algorithm>
 
 class TurtlebotController : public rclcpp::Node {
     private:
@@ -33,6 +35,18 @@ class TurtlebotController : public rclcpp::Node {
         * 
         */
         rclcpp::TimerBase::SharedPtr timer;
+
+        /**
+         * @brief Double to store the distance to the closest obstacle
+         * 
+         */
+        double closest_obstacle_distance;
+
+        /**
+         * @brief Instance of the walker controller class
+         * 
+         */
+        WalkerController walker_controller;
 
     public:
 
@@ -56,7 +70,13 @@ class TurtlebotController : public rclcpp::Node {
          */
         void laser_callback(const sensor_msgs::msg::LaserScan::SharedPtr msg) {
             // Print the distance of the first ray
-            RCLCPP_INFO(this->get_logger(), "Distance to obstacle: %f", msg->ranges[0]);
+            // RCLCPP_INFO(this->get_logger(), "Distance to obstacle: %f", msg->ranges[0]);
+
+            // Update the distance to the closest obstacle, get the minimum value from the first 30 rays on either side
+            closest_obstacle_distance = std::min(
+                *std::min_element(msg->ranges.begin(), msg->ranges.begin() + 10),
+                *std::min_element(msg->ranges.rbegin(), msg->ranges.rbegin() + 10)
+            );
         }
 
         /**
@@ -64,10 +84,9 @@ class TurtlebotController : public rclcpp::Node {
          * 
          */
         void publish_velocity() {
-            // Create a velocity command message
-            auto velocity_msg = geometry_msgs::msg::Twist();
-            velocity_msg.linear.x = 0.0;  // Move forward
-            velocity_msg.angular.z = 0.0; // No rotation
+            RCLCPP_INFO(this->get_logger(), "Closest obstacle distance: %f", closest_obstacle_distance);
+
+            geometry_msgs::msg::Twist velocity_msg = walker_controller.update(closest_obstacle_distance);
 
             // Publish the velocity command
             velocity_publisher->publish(velocity_msg);

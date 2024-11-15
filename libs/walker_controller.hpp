@@ -12,46 +12,42 @@
 #pragma once
 
 #include "geometry_msgs/msg/twist.hpp"
+#include <iostream>
 
 /**
- * @brief Namespace for the walker controller
- */
-namespace walker {
-
-    /**
-     * @brief Abstract base class for robot states
-     */
-    class State {
+    * @brief Abstract base class for robot states
+    */
+class State {
     public:
         virtual ~State() = default;
 
         /**
-         * @brief Handles the action for the current state
-         * @return geometry_msgs::msg::Twist The action to be taken (velocity command)
-         */
+        * @brief Handles the action for the current state
+        * @return geometry_msgs::msg::Twist The action to be taken (velocity command)
+        */
         virtual geometry_msgs::msg::Twist handle() = 0;
 
         /**
-         * @brief Updates the state based on sensor input
-         * @param close_to_obstacle Boolean indicating if the robot is close to an obstacle
-         */
+        * @brief Updates the state based on sensor input
+        * @param close_to_obstacle Boolean indicating if the robot is close to an obstacle
+        */
         virtual void update_state(bool close_to_obstacle) = 0;
-    };
+};
 
-    /**
-     * @brief Class representing the "Moving Forward" state of the robot
-     */
-    class MovingForwardState : public State {
+/**
+    * @brief Class representing the "Moving Forward" state of the robot
+    */
+class MovingForwardState : public State {
     public:
         MovingForwardState();
         geometry_msgs::msg::Twist handle() override;
         void update_state(bool close_to_obstacle) override;
-    };
+};
 
-    /**
-     * @brief Class representing the "Rotating" state of the robot
-     */
-    class RotatingState : public State {
+/**
+* @brief Class representing the "Rotating" state of the robot
+*/
+class RotatingState : public State {
     public:
         explicit RotatingState(bool clockwise);
         geometry_msgs::msg::Twist handle() override;
@@ -59,12 +55,12 @@ namespace walker {
 
     private:
         bool clockwise_;
-    };
+};
 
-    /**
-     * @brief Context class for the robot that manages state transitions
-     */
-    class WalkerController {
+/**
+    * @brief Context class for the robot that manages state transitions
+    */
+class WalkerController {
     public:
         WalkerController();
         ~WalkerController();
@@ -75,5 +71,5 @@ namespace walker {
         bool close_to_obstacle;
         bool rotate_clockwise;
         void set_state(State* state);
-    };
-}
+        bool turning;
+};
