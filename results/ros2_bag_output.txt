@@ -1,0 +1,22 @@
+
+Files:             recorded_topics_0.db3
+Bag size:          6.5 MiB
+Storage id:        sqlite3
+Duration:          42.151627891s
+Start:             Nov 15 2024 07:10:18.203696623 (1731672618.203696623)
+End:               Nov 15 2024 07:11:00.355324514 (1731672660.355324514)
+Messages:          20088
+Topic information: Topic: /cmd_vel | Type: geometry_msgs/msg/Twist | Count: 3338 | Serialization Format: cdr
+                   Topic: /scan | Type: sensor_msgs/msg/LaserScan | Count: 202 | Serialization Format: cdr
+                   Topic: /joint_states | Type: sensor_msgs/msg/JointState | Count: 1192 | Serialization Format: cdr
+                   Topic: /performance_metrics | Type: gazebo_msgs/msg/PerformanceMetrics | Count: 204 | Serialization Format: cdr
+                   Topic: /events/write_split | Type: rosbag2_interfaces/msg/WriteSplitEvent | Count: 0 | Serialization Format: cdr
+                   Topic: /parameter_events | Type: rcl_interfaces/msg/ParameterEvent | Count: 74 | Serialization Format: cdr
+                   Topic: /robot_description | Type: std_msgs/msg/String | Count: 1 | Serialization Format: cdr
+                   Topic: /tf_static | Type: tf2_msgs/msg/TFMessage | Count: 1 | Serialization Format: cdr
+                   Topic: /odom | Type: nav_msgs/msg/Odometry | Count: 1192 | Serialization Format: cdr
+                   Topic: /imu | Type: sensor_msgs/msg/Imu | Count: 8109 | Serialization Format: cdr
+                   Topic: /rosout | Type: rcl_interfaces/msg/Log | Count: 3388 | Serialization Format: cdr
+                   Topic: /clock | Type: rosgraph_msgs/msg/Clock | Count: 407 | Serialization Format: cdr
+                   Topic: /tf | Type: tf2_msgs/msg/TFMessage | Count: 1980 | Serialization Format: cdr
+

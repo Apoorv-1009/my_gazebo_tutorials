@@ -28,7 +28,6 @@
  */
 
 #include <algorithm>
-
 #include <geometry_msgs/msg/twist.hpp>
 #include "rclcpp/rclcpp.hpp"
 #include "sensor_msgs/msg/laser_scan.hpp"
